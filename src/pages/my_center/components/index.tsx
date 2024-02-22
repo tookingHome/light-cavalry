@@ -8,6 +8,7 @@ import { AtButton } from "taro-ui";
 import { ItemsInterfaces } from "../../../interfaces/interfaces";
 // 样式
 import "./../index.scss";
+
 type IProps = {
   itemsData: ItemsInterfaces;
 };
@@ -29,6 +30,8 @@ class Item extends Component {
   // 投稿
   handleBtn = (val, e) => {
     e.stopPropagation();
+    console.log(e, val, 'eee');
+    // return
     Taro.redirectTo({
       url: `/pages/history_detail/index?type=3&routeId=${val.routeId}&date=${val.date}&speed=${val.speed}&distance=${val.distance}`,
     });
@@ -39,19 +42,19 @@ class Item extends Component {
     const lists = itemsData.routeList.map((val) => (
       <View
         onClick={this.handleNavigate.bind(this, val.routeId)}
-        className="items"
+        className='items'
       >
-        <View className="lHead"></View>
-        <View className="rText">
-          <View className="tit">
-            <Text className="num">{(val.distance / 1000).toFixed(2)}</Text>
+        <View className='lHead'></View>
+        <View className='rText'>
+          <View className='tit'>
+            <Text className='num'>{(val.distance / 1000).toFixed(2)}</Text>
             km
-            <View className="textR">
+            <View className='textR'>
               {val.isShare ? (
-                <Text className="isShare">已投稿</Text>
+                <Text className='isShare'>已投稿</Text>
               ) : (
                 <AtButton
-                  className="finishBtn"
+                  className='finishBtn'
                   onClick={this.handleBtn.bind(this, val)}
                 >
                   投稿
@@ -60,14 +63,14 @@ class Item extends Component {
               )}
             </View>
           </View>
-          <View className="timeSpeed">
-            <View className="time">
-              <Icon className="icon" />
+          <View className='timeSpeed'>
+            <View className='time'>
+              <Icon className='icon' />
               {val.time}
               {/* {formatTime(new Date(Number(val.date)))} */}
             </View>
-            <View className="speed">
-              <Icon className="timeIcon" />
+            <View className='speed'>
+              <Icon className='timeIcon' />
               {val.speed}km/h
             </View>
           </View>
@@ -75,7 +78,7 @@ class Item extends Component {
       </View>
     ));
     return (
-      <View className="userItems">
+      <View className='userItems'>
         {/* 列表 */}
         <View>{lists}</View>
         {/* end */}

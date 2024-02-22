@@ -84,29 +84,35 @@ class historDetails extends Component {
     this.setState({
       routeId: routerParams.routeId ?? "",
     });
-    // 获取路线详情
-    const { data } = await routeDetails(
-      // (routerParams.userId || routerParams.routeId) ?? ""
-      routerParams.routeId ?? ""
-    );
-    data.distance = (Number(data.distance) / 1000).toFixed(2);
-
-    if (data.time === null) {
-      data.distance = MotionInfoData.distanceData;
-      data.time = MotionInfoData.timeData;
-      data.speed = MotionInfoData.speedData;
-    }
-
-    // 个人数据
-    const userData = await getUserData(data!.userId);
-    // 路线同行人
-    const nearByData = await newUserData(routerParams.routeId ?? "");
-    console.log(nearByData, 566995);
     // 从redux中获取当前地理位置
     const {
       counter: { GpsInfo },
     } = this.props;
     const gpsInfo = GpsInfo;
+    console.log(gpsInfo, 'gpsInfo');
+    // 获取路线详情
+    const { data } = await routeDetails(
+      // (routerParams.userId || routerParams.routeId) ?? ""
+      routerParams.routeId ?? "",
+      {
+        latitude: gpsInfo.latitude,
+        longitude: gpsInfo.longitude
+      }
+    );
+    data.distance = (Number(data.distance) / 1000).toFixed(2);
+    console.log(data, 'detail');
+    
+    if (data.time === null) {
+      data.distance = MotionInfoData.distanceData;
+      data.time = MotionInfoData.timeData;
+      data.speed = MotionInfoData.speedData;
+    }
+    
+    // 个人数据
+    const userData = await getUserData(data!.userId);
+    // 路线同行人
+    const nearByData = await newUserData(routerParams.routeId ?? "");
+    console.log(nearByData, 566995);
     let polyLineData: any = [
       {
         points: [],
@@ -310,12 +316,12 @@ class historDetails extends Component {
     } = this.state;
     console.log(routerParams, 555);
     const GoMotionBut = () => (
-      <View className="goMotion" onClick={this.goMotionTap}>
+      <View className='goMotion' onClick={this.goMotionTap}>
         开始运动
       </View>
     );
     return baseData ? (
-      <View className="historDetails">
+      <View className='historDetails'>
         {/* {routerParams.type === "3" ? (
           <NavBar
             fixed
@@ -329,47 +335,47 @@ class historDetails extends Component {
         <NavBar
           fixed
           isBackMy
-          title="完成的路线"
+          title='完成的路线'
           handleBack={this.handleBack}
         />
 
-        <View className="at-row at-row--wrap product-list">
+        <View className='at-row at-row--wrap product-list'>
           <MapComp polyLineData={polyLineData} markers={markers}></MapComp>
           {/* 3 我的详情 4投稿页面*/}
           {routerParams.type === "3" || routerParams.type === "4" ? (
-            <View className="main">
+            <View className='main'>
               {/* 公里 */}
-              <View className=" boxBg">
-                <View className="headInfo">
-                  <View className="lHead">
+              <View className=' boxBg'>
+                <View className='headInfo'>
+                  <View className='lHead'>
                     <Image src={userData.logo} />
                   </View>
-                  <View className="rText">
-                    <Text className="title">
+                  <View className='rText'>
+                    <Text className='title'>
                       {userData.nickName}
                       {baseData.isShare === true ? (
-                        <Text className="isShare textR">已投稿</Text>
+                        <Text className='isShare textR'>已投稿</Text>
                       ) : null}
                     </Text>
-                    <Text className="address">{baseData.title}</Text>
+                    <Text className='address'>{baseData.title}</Text>
                   </View>
                 </View>
-                <View className="timeInfo">
+                <View className='timeInfo'>
                   {formatTimeData(new Date(Number(baseData.endTime)))}
                   <text>
-                    <text className="icon" />
+                    <text className='icon' />
                     {baseData.time}
                   </text>
                 </View>
-                <View className="kilometre">
-                  <View className="info">
+                <View className='kilometre'>
+                  <View className='info'>
                     <Text>里程</Text>
-                    <Text className="num">{baseData.distance}</Text>
+                    <Text className='num'>{baseData.distance}</Text>
                     <Text>km</Text>
                   </View>
-                  <View className="info">
+                  <View className='info'>
                     <Text>运动时间</Text>
-                    <Text className="num">
+                    <Text className='num'>
                       {baseData.time !== "null" ? (
                         <Text>{baseData.time}</Text>
                       ) : (
@@ -378,9 +384,9 @@ class historDetails extends Component {
                     </Text>
                     <Text>mm:ss</Text>
                   </View>
-                  <View className="info">
+                  <View className='info'>
                     <Text>平均速度</Text>
-                    <Text className="num">{baseData.speed}</Text>
+                    <Text className='num'>{baseData.speed}</Text>
                     <Text>km/h</Text>
                   </View>
                 </View>
@@ -388,7 +394,7 @@ class historDetails extends Component {
               {/* end */}
               {/* 按钮 */}
               {routerParams.type === "3" ? (
-                <View className="btnBox">
+                <View className='btnBox'>
                   <AtButton onClick={this.handleFinish}>确定投稿</AtButton>
                 </View>
               ) : null}
@@ -396,43 +402,43 @@ class historDetails extends Component {
               {/* end */}
             </View>
           ) : (
-            <View className="contBox">
+            <View className='contBox'>
               {routerParams.type === "6" ? (
                 <View>
-                  <View className="title">{baseData.title}</View>
-                  <View className="desc">
+                  <View className='title'>{baseData.title}</View>
+                  <View className='desc'>
                     <Text>全程 {baseData.distance} km</Text>
                   </View>
                 </View>
               ) : (
                 <View>
-                  <View className="title">{baseData.title}</View>
-                  <View className="desc">
+                  <View className='title'>{baseData.title}</View>
+                  <View className='desc'>
                     <Text>全程 {baseData.distance} km</Text>
                     <Text>距离 {distance} 米</Text>
                   </View>
                   <View>
-                    <View className="nearbyList">
-                      <View className="iconList">
+                    <View className='nearbyList'>
+                      <View className='iconList'>
                         {nearByData.records.map((item, index) => (
                           <Image
-                            className="icon"
+                            className='icon'
                             src={item.logo}
                             style={{ left: `${index * 36}rpx` }}
                             onClick={this.handleNead}
                           ></Image>
                         ))}
                       </View>
-                      <View className="descCont">
-                        <Text className="descText">
+                      <View className='descCont'>
+                        <Text className='descText'>
                           附近{nearByData.count}个人在同一条路上骑行
                         </Text>
                       </View>
                     </View>
-                    <View className="userInfo">
-                      <Image className="icon" src={userData.logo}></Image>
-                      <Text className="name">{userData.nickName}</Text>
-                      <Text className="desc">
+                    <View className='userInfo'>
+                      <Image className='icon' src={userData.logo}></Image>
+                      <Text className='name'>{userData.nickName}</Text>
+                      <Text className='desc'>
                         于{formatYearData(new Date(Number(baseData.endTime)))}
                         创建
                       </Text>

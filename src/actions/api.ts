@@ -57,9 +57,11 @@ export const reportPath = (params): Promise<any> => {
 /**
  *  查询路线
  * @param routeId
+ * @params latitude
+ * @params longitude
  */
-export const routeDetails = (routeId: string): Promise<any> => {
-  return api.get(`/route/${routeId}`);
+export const routeDetails = (routeId: string, params): Promise<any> => {
+  return api.get(`/route/${routeId}`, params);
 };
 // 路线规划
 /**

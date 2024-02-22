@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import { View, Text, Map } from "@tarojs/components";
 import Taro, {
   connectSocket,
@@ -413,34 +413,34 @@ class Index extends Component<{}, IState> {
       polyLine = [roullLine, counter.MapNewPolyLine];
     }
     return polyLineData ? (
-      <View className="contribute">
+      <View className='contribute'>
         {type === "2" || type === "" ? (
           <NavBar fixed isRun handleBack={this.handleBack} />
         ) : (
-          <NavBar fixed title="保存运动" isRun handleBack={this.handleBack} />
+          <NavBar fixed title='保存运动' isRun handleBack={this.handleBack} />
         )}
         {/* <NavBar fixed title="保存运动" isRun handleBack={this.handleBack} /> */}
         <MapComp polyLineData={polyLine} markers={mark}></MapComp>
-        <View className="main">
+        <View className='main'>
           {/* 公里 */}
-          <View className="kilometre boxBg">
-            <View className="info">
+          <View className='kilometre boxBg'>
+            <View className='info'>
               <Text>里程</Text>
-              <Text className="num">
+              <Text className='num'>
                 {motionInfoData.distanceData === 0
                   ? "0.00"
                   : motionInfoData.distanceData}
               </Text>
               <Text>km</Text>
             </View>
-            <View className="info">
+            <View className='info'>
               <Text>运动时间</Text>
-              <Text className="num">{motionInfoData.timeData}</Text>
+              <Text className='num'>{motionInfoData.timeData}</Text>
               <Text>mm:ss</Text>
             </View>
-            <View className="info">
+            <View className='info'>
               <Text>平均速度</Text>
-              <Text className="num">{motionInfoData.speedData}</Text>
+              <Text className='num'>{motionInfoData.speedData}</Text>
               <Text>km/h</Text>
             </View>
             {/* {type === "2" ? (
@@ -451,18 +451,18 @@ class Index extends Component<{}, IState> {
           {/* end */}
           {/* 标题 */}
           {type === "0" ? (
-            <View className="fromBox boxBg">
+            <View className='fromBox boxBg'>
               <AtForm onSubmit={this.onSubmit.bind(this)}>
-                <Text className="tit">
+                <Text className='tit'>
                   <Text>*</Text>轨迹标题
                 </Text>
                 <AtTextarea
                   value={this.state.value}
                   onChange={this.handleChange.bind(this)}
                   maxLength={15}
-                  placeholder="简短而有特色的名字，如果与地标相关也可以提及"
+                  placeholder='简短而有特色的名字，如果与地标相关也可以提及'
                 />
-                <View className="btnBox">
+                <View className='btnBox'>
                   {/* <AtButton
                   formType="submit"
                   className="contributeBtn"
@@ -471,8 +471,8 @@ class Index extends Component<{}, IState> {
                   完成
                 </AtButton> */}
                   <AtButton
-                    className="finishBtn"
-                    formType="reset"
+                    className='finishBtn'
+                    formType='reset'
                     disabled={this.state.value == ""}
                     onClick={this.handleSubmit}
                   >
@@ -486,10 +486,10 @@ class Index extends Component<{}, IState> {
         </View>
         <AtModal
           isOpened={this.state.isOpened}
-          title="无法保存轨迹"
-          cancelText="知道了"
+          title='无法保存轨迹'
+          cancelText='知道了'
           onCancel={this.handleCancel}
-          content="系统检测到此次骑行中存在时间或里程异常的情况，轨迹数据无法保存。"
+          content='系统检测到此次骑行中存在时间或里程异常的情况，轨迹数据无法保存。'
         />
       </View>
     ) : null;
