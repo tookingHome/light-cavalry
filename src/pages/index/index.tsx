@@ -1,25 +1,23 @@
-import { Component } from "react";
-import { View, Text, Icon, Button } from "@tarojs/components";
+import { Icon, Text, View } from "@tarojs/components";
 import Taro, { eventCenter, getCurrentInstance } from "@tarojs/taro";
+import { Component } from "react";
+import { connect } from "react-redux";
 import { AtModal, AtModalContent, AtModalHeader } from "taro-ui";
 import {
   GlobalState,
-  Thread_DETAIL_TOKEN,
-  Thread_DETAIL_USER,
+  Thread_DETAIL_TOKEN
 } from "../../utils";
-import { connect } from "react-redux";
 // ts
 import { MyData } from "../../interfaces/interfaces";
 // 接口
 import {
-  logins,
-  updateUserInfo,
-  getUserData,
   createPath,
+  getUserData,
+  logins
 } from "../../actions/api";
 // 组件
-import NavBar from "../../components/navBar";
 import Gps from "../../components/gps";
+import NavBar from "../../components/navBar";
 // 样式
 import "./index.scss";
 const mapStateToProps = (state, ownProps) => {
@@ -146,7 +144,7 @@ class Index extends Component<{}, IState> {
   // 获取code、token，然后存储token
   init = async () => {
     const { code } = await Taro.login();
-    // console.log(code, 5555);
+    console.log(code, 5555);
     // if (code) {
     const { data } = await logins(code);
     // // 存token
@@ -172,37 +170,37 @@ class Index extends Component<{}, IState> {
       showCancel: false,
       success(res) {
         if (res.confirm) {
-          Taro.getUserProfile({
-            lang: "zh_CN",
-            desc: "登录",
-            success(userInfo) {
-              eventCenter.trigger(Thread_DETAIL_USER, userInfo);
-              const params = {
-                nickName: userInfo.userInfo.nickName,
-                logo: userInfo.userInfo.avatarUrl,
-                gender: userInfo.userInfo.gender,
-                country: userInfo.userInfo.country,
-                province: userInfo.userInfo.province,
-                city: userInfo.userInfo.city,
-              };
-              updateUserInfo(params).then(async (success) => {
-                // console.log(success);
-                // eventCenter.trigger(Thread_DETAIL_USER, success.data);
-              });
-            },
-            fail: function (err) {
-              // uni.showToast({title: "授权失败", icon: 'error',})
-              _this.setState({
-                reservedState: true,
-                showInfo: {
-                  title: "授权失败",
-                  desc: "请重新授权",
-                  but: "知道了",
-                },
-              });
-              console.log("获取失败: ", err);
-            },
-          });
+          // Taro.getUserProfile({
+          //   lang: "zh_CN",
+          //   desc: "登录",
+          //   success(userInfo) {
+          //     eventCenter.trigger(Thread_DETAIL_USER, userInfo);
+          //     const params = {
+          //       nickName: userInfo.userInfo.nickName,
+          //       logo: userInfo.userInfo.avatarUrl,
+          //       gender: userInfo.userInfo.gender,
+          //       country: userInfo.userInfo.country,
+          //       province: userInfo.userInfo.province,
+          //       city: userInfo.userInfo.city,
+          //     };
+          //     updateUserInfo(params).then(async (success) => {
+          //       // console.log(success);
+          //       // eventCenter.trigger(Thread_DETAIL_USER, success.data);
+          //     });
+          //   },
+          //   fail: function (err) {
+          //     // uni.showToast({title: "授权失败", icon: 'error',})
+          //     _this.setState({
+          //       reservedState: true,
+          //       showInfo: {
+          //         title: "授权失败",
+          //         desc: "请重新授权",
+          //         but: "知道了",
+          //       },
+          //     });
+          //     console.log("获取失败: ", err);
+          //   },
+          // });
         }
       },
     });

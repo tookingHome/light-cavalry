@@ -3,4 +3,5 @@
 
 // 本地地址
 // export const baseUrl = "http://43.139.84.114:6688";
-export const baseUrl = "http://iceblock.free.idcfengye.com";
+export const baseUrl = "https://fyhfyh.cn/api/";
+    
