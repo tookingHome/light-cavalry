@@ -20,6 +20,7 @@ import Gps from "../../components/gps";
 import NavBar from "../../components/navBar";
 // 样式
 import "./index.scss";
+
 const mapStateToProps = (state, ownProps) => {
   return {
     counter: state.counter,
@@ -91,7 +92,7 @@ class Index extends Component<{}, IState> {
       });
 
     // 15秒钟监听一次地里位置变化
-    // this.timeLocal = setInterval(() => {
+    this.timeLocal = setInterval(() => {
     Taro.startLocationUpdate({
       success: (res) => {
         Taro.onLocationChange((res) => {
@@ -103,7 +104,7 @@ class Index extends Component<{}, IState> {
         console.log(res);
       },
     });
-    // }, 15000);
+    }, 15000);
   }
   async componentDidMount() {}
   // 在render之前调用
@@ -285,49 +286,49 @@ class Index extends Component<{}, IState> {
     const { baseData, showInfo, reservedState } = this.state;
 
     return (
-      <View className="index">
-        <NavBar fixed leftIcon="logo" />
-        <View className="topbgGradient">
+      <View className='index'>
+        <NavBar fixed leftIcon='logo' />
+        <View className='topbgGradient'>
           {/* GPS */}
           <Gps />
           {/* end */}
           {/* 公里 */}
           <View
-            className="kilometre"
+            className='kilometre'
             onClick={this.handleMyCenter}
-            open-type="getUserInfo"
-            bindgetuserinfo="bindGetUserInfo"
+            open-type='getUserInfo'
+            bindgetuserinfo='bindGetUserInfo'
           >
-            <Text className="text">本月累计骑行 km</Text>
-            <Text className="num">
+            <Text className='text'>本月累计骑行 km</Text>
+            <Text className='num'>
               {(Number(baseData.totalDistance) / 1000).toFixed(2)}
             </Text>
           </View>
         </View>
         {/* end */}
-        <View className="botbgGradient">
+        <View className='botbgGradient'>
           {/* 导航 */}
-          <View className="bottomBox">
+          <View className='bottomBox'>
             {this.isRun === "back" ? (
-              <View className="myBox isRun">
+              <View className='myBox isRun'>
                 <Icon></Icon>
-                <Text className="col">我的</Text>
+                <Text className='col'>我的</Text>
               </View>
             ) : (
-              <View className="myBox" onClick={this.handleMyCenter}>
+              <View className='myBox' onClick={this.handleMyCenter}>
                 <Icon></Icon>
                 <Text>我的</Text>
               </View>
             )}
 
-            <View className="goExercise" onClick={this.handleStart}>
+            <View className='goExercise' onClick={this.handleStart}>
               {this.isRun === undefined ? (
-                <Icon className="icon startIcon" />
+                <Icon className='icon startIcon' />
               ) : (
-                <Icon className="icon backIcon" />
+                <Icon className='icon backIcon' />
               )}
             </View>
-            <View className="pathBox" onClick={this.handleSearchAround}>
+            <View className='pathBox' onClick={this.handleSearchAround}>
               <Icon></Icon>
               <Text>路线</Text>
             </View>
@@ -338,7 +339,7 @@ class Index extends Component<{}, IState> {
           <AtModalHeader>{showInfo.title}</AtModalHeader>
           <AtModalContent>{showInfo.desc}</AtModalContent>
           <View>
-            <navigator open-type="exit" class="define" target="miniProgram">
+            <navigator open-type='exit' class='define' target='miniProgram'>
               {showInfo.but}
             </navigator>
           </View>
